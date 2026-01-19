@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
+@source "../app/**/*.{js,ts,jsx,tsx}";
+@source "../components/**/*.{js,ts,jsx,tsx}";
+@source "../pages/**/*.{js,ts,jsx,tsx}";
+
+/* Design system CSS variables */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 0 0% 100%;
+  --foreground: 25 65% 20%;
+
+  --card: 40 100% 99%;
+  --card-foreground: 25 65% 20%;
+
+  --primary: 25 95% 53%;
+  --primary-foreground: 40 100% 99%;
+
+  --secondary: 45 100% 51%;
+  --secondary-foreground: 25 65% 20%;
+
+  --muted: 38 35% 92%;
+  --muted-foreground: 25 25% 45%;
+
+  --accent: 0 72% 51%;
+  --accent-foreground: 40 100% 99%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 38 30% 88%;
+  --input: 38 30% 88%;
+  --ring: 25 95% 53%;
+
+  --radius: 0.5rem;
+
+  --spiritual-saffron: 25 95% 53%;
+  --spiritual-gold: 45 100% 51%;
+  --spiritual-red: 0 72% 51%;
+  --spiritual-cream: 38 45% 97%;
+  --spiritual-deep: 25 80% 30%;
+
+  --gradient-hero: linear-gradient(135deg, hsl(25 95% 53% / 0.95), hsl(45 100% 51% / 0.9));
+  --gradient-card: linear-gradient(180deg, hsl(40 100% 99%), hsl(38 45% 97%));
+  --gradient-divine: linear-gradient(135deg, hsl(25 95% 53%), hsl(45 100% 51%), hsl(0 72% 51%));
+  --gradient-sacred: linear-gradient(180deg, hsl(25 95% 53%), hsl(25 80% 45%));
+
+  --shadow-soft: 0 4px 20px hsl(25 95% 53% / 0.15);
+  --shadow-hover: 0 8px 30px hsl(25 95% 53% / 0.25);
+  --shadow-divine: 0 10px 40px hsl(45 100% 51% / 0.35);
+  --shadow-sacred: 0 15px 50px hsl(25 95% 53% / 0.4);
+
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --background: 25 50% 8%;
+  --foreground: 40 45% 95%;
+
+  --card: 25 45% 12%;
+  --card-foreground: 40 45% 95%;
+
+  --primary: 25 95% 58%;
+  --primary-foreground: 25 50% 8%;
+
+  --secondary: 45 100% 58%;
+  --secondary-foreground: 25 50% 8%;
+
+  --muted: 25 30% 18%;
+  --muted-foreground: 38 25% 65%;
+
+  --accent: 0 72% 58%;
+  --accent-foreground: 25 50% 8%;
+
+  --destructive: 0 62.8% 40%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 25 35% 22%;
+  --input: 25 35% 22%;
+  --ring: 25 95% 58%;
+
+  --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.5);
+  --shadow-hover: 0 8px 30px hsl(25 95% 53% / 0.4);
+  --shadow-divine: 0 10px 40px hsl(45 100% 51% / 0.5);
+  --shadow-sacred: 0 15px 50px hsl(25 95% 53% / 0.5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html,
+body,
+:root {
+  height: 100%;
+}
+
+/* Message bubble gradients */
+.msg-gradient-own {
+  background: linear-gradient(135deg, hsl(25 95% 53%), hsl(45 100% 51%));
+}
+
+.msg-gradient-other {
+  background: linear-gradient(180deg, hsl(40 100% 99%), hsl(38 45% 97%));
+}
+
+/* Animated border for cards */
+@keyframes animated-border {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 200% 0%;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animated-border {
+  position: relative;
+}
+
+.animated-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(90deg, #fb923c, #f59e0b, #fb923c, #f97316, #fb923c);
+  background-size: 400% 400%;
+  border-radius: 1.5rem;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: animated-border 6s linear infinite;
+}
+
+.animated-border:hover::before {
+  animation-play-state: paused;
 }
